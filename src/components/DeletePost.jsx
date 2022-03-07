@@ -10,16 +10,14 @@ function Delete({
   posts,
 }) {
   function deletePost(id) {
-    console.log(`https://jsonplaceholder.typicode.com/posts/${id}`);
-
     axios
       .delete(`https://jsonplaceholder.typicode.com/posts/${id}`)
       .then((res) => {
         // получаю ответ от сервера
         console.log(res);
         // JSONplaceholder не позволяет на самом деле удалять данные из БД поэтому имитирую фильтруя массив
-        if (res.status == 200) {
-          changeState(posts.filter((item) => item.id != id));
+        if (res.status === 200) {
+          changeState(posts.filter((item) => item.id !== id));
         }
       });
   }
