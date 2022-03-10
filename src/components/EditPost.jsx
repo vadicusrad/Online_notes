@@ -47,10 +47,11 @@ const ButtonWrapper = styled.div`
   margin: 0;
 `;
 
-function EditPost({ posts }) {
+function EditPost({ posts, changeState }) {
   const [post, setPost] = useState(null);
   const { id } = useParams();
-  console.log('post ===', post);
+
+  // Поскольку я не могу редактровать данные сервера пока буду работать со стейтом.
   // useEffect(() => {
   //   axios
   //     .get(`https://jsonplaceholder.typicode.com/posts/${id}`)
@@ -61,26 +62,26 @@ function EditPost({ posts }) {
     const currentId = Number(id);
 
     const filteredPosts = posts.filter((item) => item.id === currentId);
-    setPost(filteredPosts);
+    setPost(filteredPosts[0]);
   }, []);
 
   function setPostState(key, value) {
-    let newPost = post;
-    newPost[0][key] = value;
+    let newPost = JSON.parse(JSON.stringify(post));
+    newPost[key] = value;
     setPost(newPost);
   }
 
   function saveChangesInState() {
-    const id = post.id;
-    const newPosts = posts;
-    newPosts.map((item) => {
-      if (item.id === id) {
+    const newPosts = JSON.parse(JSON.stringify(posts));
+
+    newPosts.forEach((item) => {
+      if (item.id === post.id) {
         item.title = post.title;
         item.body = post.body;
       }
     });
 
-    console.log(newPosts);
+    changeState(newPosts);
   }
 
   return (
@@ -91,11 +92,11 @@ function EditPost({ posts }) {
           <NewPostTemplate>
             <InputTitle
               onChange={(e) => setPostState('title', e.target.value)}
-              defaultValue={post[0].title}
+              defaultValue={post.title}
             />
             <InputBody
               onChange={(e) => setPostState('body', e.target.value)}
-              defaultValue={post[0].body}
+              defaultValue={post.body}
             />
 
             <ButtonWrapper>

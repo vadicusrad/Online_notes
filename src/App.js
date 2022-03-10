@@ -54,7 +54,10 @@ function App() {
           element={<PostsList changeState={changeState} posts={posts} />}
         />
         <Route path='/posts/:id' element={<SinglePostPage />} />
-        <Route path='/posts/:id/edit' element={<EditPost posts={posts} />} />
+        <Route
+          path='/posts/:id/edit'
+          element={<EditPost posts={posts} changeState={changeState} />}
+        />
         <Route
           path='/posts/new'
           element={<CreatePost posts={posts} changeState={changeState} />}
