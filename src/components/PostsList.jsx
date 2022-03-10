@@ -1,9 +1,8 @@
 import React from 'react';
-import axios from 'axios';
+
 import PostTemplate from './PostTemplate';
 import styled from 'styled-components';
 import AddPostButton from './AddPostBotton';
-import { useState, useEffect } from 'react';
 
 const AppPosts = styled.div`
   display: grid;
@@ -11,22 +10,7 @@ const AppPosts = styled.div`
   gap: 10px;
 `;
 
-function PostsList() {
-  const [posts, setPosts] = useState([]);
-  console.log('my state now - ', posts);
-  const _apiBase = 'https://jsonplaceholder.typicode.com/';
-
-  useEffect(() => {
-    axios.get(`${_apiBase}posts/?_limit=3`).then((res) => {
-      setPosts(res.data);
-    });
-  }, []);
-
-  function changeState(newState) {
-    console.log('changeState work', newState);
-    setPosts(newState);
-  }
-
+function PostsList({ posts, changeState }) {
   const items = posts.map((item) => {
     return (
       <PostTemplate

@@ -46,7 +46,7 @@ const ButtonWrapper = styled.div`
   margin: 0;
 `;
 
-function CreatePost() {
+function CreatePost({ posts, changeState }) {
   const [post, setPost] = useState({
     id: null,
     title: '',
@@ -70,10 +70,13 @@ function CreatePost() {
   function postNewPost() {
     axios
       .post('https://jsonplaceholder.typicode.com/posts', { post })
-      .then((res) => console.log(res));
+      .then(() => {
+        const newState = [...posts];
+        newState.push(post);
+        changeState(newState);
+      });
     // так как JSON Placeholder не позвлоляет реально удалять посты с сервера
     // я сохраню новый пост себе в главный стейт с постами
-    
   }
 
   return (
