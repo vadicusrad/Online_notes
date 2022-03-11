@@ -5,7 +5,6 @@ import { Routes, Route } from 'react-router-dom';
 import PostsList from './components/PostsList';
 import SinglePostPage from './components/SinglePostPage';
 import CreatePost from './components/CreatePost';
-import Counter from './components/Counter';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 
@@ -33,18 +32,25 @@ const AppContainer = styled.div`
 function App() {
   const [posts, setPosts] = useState([]);
   console.log('my state now - ', posts);
+
   const _apiBase = 'https://jsonplaceholder.typicode.com/';
 
   useEffect(() => {
-    axios.get(`${_apiBase}posts/?_limit=3`).then((res) => {
-      setPosts(res.data);
-    });
+    const postsFromLS = JSON.parse(localStorage.getItem('myPosts'));
+
+    postsFromLS
+      ? setPosts(postsFromLS)
+      : axios.get(`${_apiBase}posts/?_limit=3`).then((res) => {
+          setPosts(res.data);
+        });
   }, []);
 
   function changeState(newState) {
-    console.log('changeState work', newState);
-    setPosts(newState);
+    localStorage.setItem('myPosts', JSON.stringify(newState));
+    const myPostsFromLS = JSON.parse(localStorage.getItem('myPosts'));
+    setPosts(myPostsFromLS);
   }
+
   return (
     <AppContainer>
       <GlobalStyle />
@@ -63,7 +69,6 @@ function App() {
           element={<CreatePost posts={posts} changeState={changeState} />}
         />
       </Routes>
-      {/* <Counter /> */}
     </AppContainer>
   );
 }

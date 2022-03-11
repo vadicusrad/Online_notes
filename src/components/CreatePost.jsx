@@ -71,12 +71,12 @@ function CreatePost({ posts, changeState }) {
     axios
       .post('https://jsonplaceholder.typicode.com/posts', { post })
       .then(() => {
+        // так как JSON Placeholder не позвлоляет реально добавлять посты на сервер
+        // я сохраню новый пост себе в главный стейт с постами
         const newState = [...posts];
         newState.push(post);
         changeState(newState);
       });
-    // так как JSON Placeholder не позвлоляет реально удалять посты с сервера
-    // я сохраню новый пост себе в главный стейт с постами
   }
 
   return (

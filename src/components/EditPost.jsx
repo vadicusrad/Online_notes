@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
 import SaveIcon from './SaveIcon';
 import BackIcon from './BackIcon';
 
@@ -72,6 +72,14 @@ function EditPost({ posts, changeState }) {
   }
 
   function saveChangesInState() {
+    // Поскольку я не могу редактровать данные сервера пока буду работать со стейтом.
+    // axios
+    //   .put(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+    //     title: post.title,
+    //     body: post.body,
+    //   })
+    //   .then((res) => console.log('axios.put ===', res));
+
     const newPosts = JSON.parse(JSON.stringify(posts));
 
     newPosts.forEach((item) => {
