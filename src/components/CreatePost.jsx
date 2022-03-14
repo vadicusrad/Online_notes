@@ -46,7 +46,7 @@ const ButtonWrapper = styled.div`
   margin: 0;
 `;
 
-function CreatePost({ posts, changeState }) {
+function CreatePost({ posts, changeState, handleEditPopUp }) {
   const [post, setPost] = useState({
     id: null,
     title: '',
@@ -86,7 +86,12 @@ function CreatePost({ posts, changeState }) {
         <InputTitle onChange={(e) => setPostState('title', e.target.value)} />
         <InputBody onChange={(e) => setPostState('body', e.target.value)} />
         <ButtonWrapper>
-          <span onClick={() => postNewPost()}>
+          <span
+            onClick={() => {
+              postNewPost();
+              handleEditPopUp({ active: true, message: 'Post created' });
+            }}
+          >
             <SaveIcon />
           </span>
 

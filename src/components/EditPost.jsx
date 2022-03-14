@@ -47,7 +47,7 @@ const ButtonWrapper = styled.div`
   margin: 0;
 `;
 
-function EditPost({ posts, changeState }) {
+function EditPost({ posts, changeState, handleEditPopUp }) {
   const [post, setPost] = useState(null);
   const { id } = useParams();
 
@@ -90,6 +90,7 @@ function EditPost({ posts, changeState }) {
     });
 
     changeState(newPosts);
+    handleEditPopUp({ active: true, message: 'Changes saved' });
   }
 
   return (

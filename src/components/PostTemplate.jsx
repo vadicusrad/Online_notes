@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import EditIcon from './EditIcon';
 import DeletePost from './DeletePost';
@@ -48,6 +48,27 @@ const RouteLink = styled(Link)`
 `;
 
 function PostTemplate({ id, title, descr, changeState, posts }) {
+  const [like, setLike] = useState(null);
+  // console.log(like);
+
+  useEffect(() => {
+    const thisPost = posts.find((item) => item.id === id);
+    setLike(thisPost.like);
+  }, []);
+
+  function toggleLike() {
+    setLike(!like);
+    const newPosts = JSON.parse(JSON.stringify(posts));
+
+    newPosts.forEach((item) => {
+      if (item.id === id) {
+        item.like = like;
+      }
+    });
+    console.log('newPostsWihtLoke ===', newPosts);
+    changeState(newPosts);
+  }
+
   return (
     <Post>
       <PostTitle>
@@ -74,7 +95,17 @@ function PostTemplate({ id, title, descr, changeState, posts }) {
             fill='black'
           />
         </ButtonWrapper>
-        <Heart width='25' height='25' fill='grey' />
+        <span onClick={() => toggleLike()}>
+          <Heart
+            // id={id}
+            // posts={posts}
+            // changeState={changeState}
+            like={like}
+            width='25'
+            height='25'
+            fill='grey'
+          />
+        </span>
       </ButtonContainer>
     </Post>
   );

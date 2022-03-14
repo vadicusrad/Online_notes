@@ -7,6 +7,7 @@ import SinglePostPage from './components/SinglePostPage';
 import CreatePost from './components/CreatePost';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import PopUpMessage from './components/PopUpMessage';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -32,7 +33,17 @@ const AppContainer = styled.div`
 function App() {
   const [posts, setPosts] = useState([]);
   console.log('my state now - ', posts);
+  const [popUp, setPopUp] = useState({
+    active: false,
+    message: '',
+  });
 
+  function handleEditPopUp(popUpObject) {
+    setPopUp(popUpObject);
+    setTimeout(() => {
+      setPopUp((popUpObject.active = false));
+    }, 2000);
+  }
   const _apiBase = 'https://jsonplaceholder.typicode.com/';
 
   useEffect(() => {
@@ -41,9 +52,19 @@ function App() {
     postsFromLS
       ? setPosts(postsFromLS)
       : axios.get(`${_apiBase}posts/?_limit=3`).then((res) => {
-          setPosts(res.data);
+          // хочу чтоб посты можно было лайкать
+          addLikeKeyInPostsArr(res.data);
         });
   }, []);
+
+  function addLikeKeyInPostsArr(arr) {
+    const newArr = JSON.parse(JSON.stringify(arr));
+    newArr.forEach((item) => {
+      item.like = false;
+    });
+
+    setPosts(newArr);
+  }
 
   function changeState(newState) {
     localStorage.setItem('myPosts', JSON.stringify(newState));
@@ -62,13 +83,31 @@ function App() {
         <Route path='/posts/:id' element={<SinglePostPage />} />
         <Route
           path='/posts/:id/edit'
-          element={<EditPost posts={posts} changeState={changeState} />}
+          element={
+            <EditPost
+              handleEditPopUp={handleEditPopUp}
+              posts={posts}
+              changeState={changeState}
+            />
+          }
         />
         <Route
           path='/posts/new'
-          element={<CreatePost posts={posts} changeState={changeState} />}
+          element={
+            <CreatePost
+              handleEditPopUp={handleEditPopUp}
+              posts={posts}
+              changeState={changeState}
+            />
+          }
         />
       </Routes>
+      {popUp.active ? (
+        <PopUpMessage
+          handleEditPopUp={handleEditPopUp}
+          messageText={popUp.message}
+        />
+      ) : null}
     </AppContainer>
   );
 }
