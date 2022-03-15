@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import SaveIcon from './SaveIcon';
@@ -51,6 +51,7 @@ function CreatePost({ posts, changeState, handleEditPopUp }) {
     id: null,
     title: '',
     body: '',
+    like: false,
   });
 
   function setPostState(key, value) {
@@ -59,23 +60,19 @@ function CreatePost({ posts, changeState, handleEditPopUp }) {
     setPost(newPost);
   }
 
-  function getRandomId(max = 100000, min = 101) {
-    return Math.floor(Math.random() * (max - min)) + min;
-  }
-
-  useEffect(() => {
-    setPostState('id', getRandomId());
-  }, []);
-
-  function postNewPost() {
+  function createNewPost() {
     axios
-      .post('https://jsonplaceholder.typicode.com/posts', { post })
-      .then(() => {
-        // так как JSON Placeholder не позвлоляет реально добавлять посты на сервер
+      .post('https://6230a297f113bfceed575b81.mockapi.io/database/posts', {
+        title: post.title,
+        body: post.body,
+        like: false,
+      })
+      .then((res) => {
         // я сохраню новый пост себе в главный стейт с постами
         const newState = [...posts];
-        newState.push(post);
+        newState.push(res.data);
         changeState(newState);
+        console.log('createNewPost ===', res);
       });
   }
 
@@ -88,7 +85,7 @@ function CreatePost({ posts, changeState, handleEditPopUp }) {
         <ButtonWrapper>
           <span
             onClick={() => {
-              postNewPost();
+              createNewPost();
               handleEditPopUp({ active: true, message: 'Post created' });
             }}
           >

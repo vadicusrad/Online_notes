@@ -32,7 +32,7 @@ const AppContainer = styled.div`
 
 function App() {
   const [posts, setPosts] = useState([]);
-  console.log('my state now - ', posts);
+  // console.log('my state now - ', posts);
   const [popUp, setPopUp] = useState({
     active: false,
     message: '',
@@ -44,26 +44,19 @@ function App() {
       setPopUp((popUpObject.active = false));
     }, 2000);
   }
-  const _apiBase = 'https://jsonplaceholder.typicode.com/';
+
+  const _apiBase = 'https://6230a297f113bfceed575b81.mockapi.io/database/';
 
   useEffect(() => {
     const postsFromLS = JSON.parse(localStorage.getItem('myPosts'));
 
-    postsFromLS
-      ? setPosts(postsFromLS)
-      : axios.get(`${_apiBase}posts/?_limit=3`).then((res) => {
-          // хочу чтоб посты можно было лайкать
-          addLikeKeyInPostsArr(res.data);
-        });
+    postsFromLS ? setPosts(postsFromLS) : getResurses();
   }, []);
 
-  function addLikeKeyInPostsArr(arr) {
-    const newArr = JSON.parse(JSON.stringify(arr));
-    newArr.forEach((item) => {
-      item.like = false;
+  function getResurses() {
+    axios.get(`${_apiBase}posts/`).then((res) => {
+      setPosts(res.data);
     });
-
-    setPosts(newArr);
   }
 
   function changeState(newState) {
@@ -78,7 +71,13 @@ function App() {
       <Routes>
         <Route
           path='/'
-          element={<PostsList changeState={changeState} posts={posts} />}
+          element={
+            <PostsList
+              getResurses={getResurses}
+              changeState={changeState}
+              posts={posts}
+            />
+          }
         />
         <Route path='/posts/:id' element={<SinglePostPage />} />
         <Route

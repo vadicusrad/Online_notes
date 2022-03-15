@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import EditIcon from './EditIcon';
 import DeletePost from './DeletePost';
 import Heart from './Heart';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Post = styled.div`
   border: solid 1px;
@@ -47,26 +48,27 @@ const RouteLink = styled(Link)`
   text-decoration: none;
 `;
 
-function PostTemplate({ id, title, descr, changeState, posts }) {
-  const [like, setLike] = useState(null);
-  // console.log(like);
-
-  useEffect(() => {
-    const thisPost = posts.find((item) => item.id === id);
-    setLike(thisPost.like);
-  }, []);
-
-  function toggleLike() {
-    setLike(!like);
+function PostTemplate({ id, title, descr, changeState, posts, like }) {
+  function editPostsState(obj) {
     const newPosts = JSON.parse(JSON.stringify(posts));
 
     newPosts.forEach((item) => {
-      if (item.id === id) {
-        item.like = like;
+      if (item.id === obj.id) {
+        item.like = obj.like;
       }
     });
-    console.log('newPostsWihtLoke ===', newPosts);
     changeState(newPosts);
+  }
+
+  function toggleLike() {
+    axios
+      .put(`https://6230a297f113bfceed575b81.mockapi.io/database/posts/${id}`, {
+        like: !like,
+      })
+      .then((res) => {
+        console.log('toggleLike ===', res);
+        editPostsState(res.data);
+      });
   }
 
   return (
@@ -95,16 +97,12 @@ function PostTemplate({ id, title, descr, changeState, posts }) {
             fill='black'
           />
         </ButtonWrapper>
-        <span onClick={() => toggleLike()}>
-          <Heart
-            // id={id}
-            // posts={posts}
-            // changeState={changeState}
-            like={like}
-            width='25'
-            height='25'
-            fill='grey'
-          />
+        <span
+          onClick={() => {
+            toggleLike();
+          }}
+        >
+          <Heart like={like} width='25' height='25' />
         </span>
       </ButtonContainer>
     </Post>

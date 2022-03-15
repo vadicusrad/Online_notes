@@ -10,7 +10,7 @@ const AppPosts = styled.div`
   gap: 10px;
 `;
 
-function PostsList({ posts, changeState }) {
+function PostsList({ posts, changeState, getResurses }) {
   const items = posts.map((item) => {
     return (
       <PostTemplate
@@ -20,6 +20,8 @@ function PostsList({ posts, changeState }) {
         id={item.id}
         title={item.title}
         descr={item.body}
+        like={item.like}
+        getResurses={getResurses}
       />
     );
   });

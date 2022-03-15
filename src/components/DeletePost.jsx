@@ -11,11 +11,12 @@ function Delete({
 }) {
   function deletePost(id) {
     axios
-      .delete(`https://jsonplaceholder.typicode.com/posts/${id}`)
+      .delete(
+        `https://6230a297f113bfceed575b81.mockapi.io/database/posts/${id}`
+      )
       .then((res) => {
-        // получаю ответ от сервера
-        console.log(res);
-        // JSONplaceholder не позволяет на самом деле удалять данные из БД поэтому имитирую фильтруя массив
+        console.log('deletePost ===', res);
+        //
         if (res.status === 200) {
           changeState(posts.filter((item) => item.id !== id));
         }

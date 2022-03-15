@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
-// import axios from 'axios';
+import axios from 'axios';
 import SaveIcon from './SaveIcon';
 import BackIcon from './BackIcon';
 
@@ -51,12 +51,11 @@ function EditPost({ posts, changeState, handleEditPopUp }) {
   const [post, setPost] = useState(null);
   const { id } = useParams();
 
-  // Поскольку я не могу редактровать данные сервера пока буду работать со стейтом.
-  // useEffect(() => {
-  //   axios
-  //     .get(`https://jsonplaceholder.typicode.com/posts/${id}`)
-  //     .then((res) => setPost(res.data));
-  // }, [id]);
+  useEffect(() => {
+    axios
+      .get(`https://6230a297f113bfceed575b81.mockapi.io/database/posts/${id}`)
+      .then((res) => setPost(res.data));
+  }, [id]);
 
   useEffect(() => {
     const currentId = Number(id);
@@ -71,14 +70,13 @@ function EditPost({ posts, changeState, handleEditPopUp }) {
     setPost(newPost);
   }
 
-  function saveChangesInState() {
-    // Поскольку я не могу редактровать данные сервера пока буду работать со стейтом.
-    // axios
-    //   .put(`https://jsonplaceholder.typicode.com/posts/${id}`, {
-    //     title: post.title,
-    //     body: post.body,
-    //   })
-    //   .then((res) => console.log('axios.put ===', res));
+  function changePost() {
+    axios
+      .put(`https://6230a297f113bfceed575b81.mockapi.io/database/posts/${id}`, {
+        title: post.title,
+        body: post.body,
+      })
+      .then((res) => console.log('changePost ===', res));
 
     const newPosts = JSON.parse(JSON.stringify(posts));
 
@@ -111,7 +109,7 @@ function EditPost({ posts, changeState, handleEditPopUp }) {
             <ButtonWrapper>
               <span
                 onClick={() => {
-                  saveChangesInState();
+                  changePost();
                 }}
               >
                 <SaveIcon />
