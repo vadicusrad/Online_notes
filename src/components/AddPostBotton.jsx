@@ -34,38 +34,10 @@ const AddNewPost = styled.div`
   }
 `;
 
-// function addNewPost(posts, changeState) {
-//   axios
-//     .post(`https://jsonplaceholder.typicode.com/posts`, {
-//       title: 'foo',
-//       body: 'bar',
-//       userId: 1,
-//     })
-//     .then((res) => {
-//       console.log('Post - ', res);
-
-//       if (res.status === 201) {
-//         const newObj = {
-//           title: 'foo',
-//           body: 'bar',
-//           userId: 1,
-//           id: Math.random(),
-//         };
-
-//         changeState([...posts, newObj]);
-//       }
-//     });
-// }
-// function getRandom() {
-//   return Math.random() * 1000;
-// }
-// // const randomId = getRandom();
-function AddPostButton({ posts, changeState }) {
+function AddPostButton() {
   return (
     <Link to={`posts/new`}>
-      <AddNewPost changeState={changeState}
-      // onClick={() => addNewPost(posts, changeState)}
-      />
+      <AddNewPost />
     </Link>
   );
 }

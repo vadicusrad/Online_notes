@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import api from '../axiosAPI/api';
 import SaveIcon from './SaveIcon';
 import BackIcon from './BackIcon';
 
@@ -52,9 +52,7 @@ function EditPost({ posts, changeState, handleEditPopUp }) {
   const { id } = useParams();
 
   useEffect(() => {
-    axios
-      .get(`https://6230a297f113bfceed575b81.mockapi.io/database/posts/${id}`)
-      .then((res) => setPost(res.data));
+    api.getSinglePost(id).then((data) => setPost(data));
   }, [id]);
 
   useEffect(() => {
@@ -71,24 +69,23 @@ function EditPost({ posts, changeState, handleEditPopUp }) {
   }
 
   function changePost() {
-    axios
-      .put(`https://6230a297f113bfceed575b81.mockapi.io/database/posts/${id}`, {
+    api
+      .putPost(id, {
         title: post.title,
         body: post.body,
       })
-      .then((res) => console.log('changePost ===', res));
+      .then(() => {
+        const newPosts = JSON.parse(JSON.stringify(posts));
 
-    const newPosts = JSON.parse(JSON.stringify(posts));
-
-    newPosts.forEach((item) => {
-      if (item.id === post.id) {
-        item.title = post.title;
-        item.body = post.body;
-      }
-    });
-
-    changeState(newPosts);
-    handleEditPopUp({ active: true, message: 'Changes saved' });
+        newPosts.forEach((item) => {
+          if (item.id === post.id) {
+            item.title = post.title;
+            item.body = post.body;
+          }
+        });
+        changeState(newPosts);
+        handleEditPopUp({ active: true, message: 'Changes saved' });
+      });
   }
 
   return (

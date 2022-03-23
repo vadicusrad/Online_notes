@@ -5,9 +5,9 @@ import { Routes, Route } from 'react-router-dom';
 import PostsList from './components/PostsList';
 import SinglePostPage from './components/SinglePostPage';
 import CreatePost from './components/CreatePost';
-import axios from 'axios';
 import { useState, useEffect } from 'react';
 import PopUpMessage from './components/PopUpMessage';
+import api from './axiosAPI/api';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -45,8 +45,6 @@ function App() {
     }, 2000);
   }
 
-  const _apiBase = 'https://6230a297f113bfceed575b81.mockapi.io/database/';
-
   useEffect(() => {
     const postsFromLS = JSON.parse(localStorage.getItem('myPosts'));
 
@@ -54,9 +52,10 @@ function App() {
   }, []);
 
   function getResurses() {
-    axios.get(`${_apiBase}posts/`).then((res) => {
-      setPosts(res.data);
-    });
+    api
+      .getPosts()
+      .then((data) => setPosts(data))
+      .catch((error) => console.error(error));
   }
 
   function changeState(newState) {

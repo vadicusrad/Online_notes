@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 import SaveIcon from './SaveIcon';
 import BackIcon from './BackIcon';
+import api from '../axiosAPI/api';
 
 const NewPostTemplate = styled.div`
   border: solid 1px;
@@ -61,18 +61,17 @@ function CreatePost({ posts, changeState, handleEditPopUp }) {
   }
 
   function createNewPost() {
-    axios
-      .post('https://6230a297f113bfceed575b81.mockapi.io/database/posts', {
+    api
+      .createNewPost({
         title: post.title,
         body: post.body,
         like: false,
       })
-      .then((res) => {
+      .then((data) => {
         // я сохраню новый пост себе в главный стейт с постами
         const newState = [...posts];
-        newState.push(res.data);
+        newState.push(data);
         changeState(newState);
-        console.log('createNewPost ===', res);
       });
   }
 

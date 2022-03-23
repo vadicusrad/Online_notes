@@ -1,29 +1,8 @@
 import React from 'react';
-// import { useState } from 'react';
 
-function HeartIcon({
-  like,
-  // id, posts, changeState,
-  width = '25',
-  height = '25',
-}) {
-  // const [like, setLike] = useState(null);
-
-  // function toggleHeartIconColor() {
-  //   const newPosts = JSON.parse(JSON.stringify(posts));
-
-  //   newPosts.forEach((item) => {
-  //     if (item.id === id) {
-  //       setLike(!item.like);
-  //       item.like = like;
-  //     }
-  //     changeState(newPosts);
-  //   });
-  // }
-
+function HeartIcon({ like, width = '25', height = '25' }) {
   return (
     <svg
-      // onClick={() => toggleHeartIconColor()}
       xmlns='http://www.w3.org/2000/svg'
       viewBox='0 0 512 512'
       width={width}

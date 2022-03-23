@@ -1,17 +1,15 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
+import api from '../axiosAPI/api';
 
 const SinglePostPage = () => {
   const [post, setPost] = useState(null);
   const { id } = useParams();
 
   useEffect(() => {
-    axios
-      .get(`https://jsonplaceholder.typicode.com/posts/${id}`)
-      .then((res) => setPost(res.data));
+    api.getSinglePost(id).then((data) => setPost(data));
   }, [id]);
 
   return (
@@ -22,7 +20,9 @@ const SinglePostPage = () => {
           <p>{post.body}</p>
           <Link to={'/'}>Back</Link>
         </>
-      ) : null}
+      ) : (
+        'Loading'
+      )}
     </div>
   );
 };

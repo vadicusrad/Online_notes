@@ -4,7 +4,7 @@ import EditIcon from './EditIcon';
 import DeletePost from './DeletePost';
 import Heart from './Heart';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../axiosAPI/api';
 
 const Post = styled.div`
   border: solid 1px;
@@ -61,14 +61,9 @@ function PostTemplate({ id, title, descr, changeState, posts, like }) {
   }
 
   function toggleLike() {
-    axios
-      .put(`https://6230a297f113bfceed575b81.mockapi.io/database/posts/${id}`, {
-        like: !like,
-      })
-      .then((res) => {
-        console.log('toggleLike ===', res);
-        editPostsState(res.data);
-      });
+    api.toggleLike(id, { like: !like }).then((data) => {
+      editPostsState(data);
+    });
   }
 
   return (
