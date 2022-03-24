@@ -12,7 +12,6 @@ const AppPosts = styled.div`
 
 function PostsList({ posts, changeState, getResurses }) {
   // проверка на случай если происходит ошибка и массив постов приходит пустой
-  // переделать
   let items = null;
   if (posts) {
     items = posts.map((item) => {
@@ -30,7 +29,7 @@ function PostsList({ posts, changeState, getResurses }) {
       );
     });
   } else {
-    return null;
+    return <p>Something went wrong... try again later please</p>;
   }
 
   return (

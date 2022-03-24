@@ -36,6 +36,7 @@ function App() {
   const [popUp, setPopUp] = useState({
     active: false,
     message: '',
+    color: 'grey',
   });
 
   function handleEditPopUp(popUpObject) {
@@ -104,6 +105,7 @@ function App() {
         <PopUpMessage
           handleEditPopUp={handleEditPopUp}
           messageText={popUp.message}
+          color={popUp.color}
         />
       ) : null}
     </AppContainer>

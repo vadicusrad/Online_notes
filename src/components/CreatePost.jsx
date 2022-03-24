@@ -53,6 +53,7 @@ function CreatePost({ posts, changeState, handleEditPopUp }) {
     body: '',
     like: false,
   });
+  const [postCreated, setPostCreated] = useState(false);
 
   function setPostState(key, value) {
     let newPost = post;
@@ -74,24 +75,51 @@ function CreatePost({ posts, changeState, handleEditPopUp }) {
         changeState(newState);
       });
   }
+  function checkChangesSaved() {
+    if (!postCreated) {
+      handleEditPopUp({
+        active: true,
+        message: 'Post not created',
+        color: '#fa6d6d',
+      });
+      setPostCreated(true);
+    }
+  }
 
   return (
     <>
       <h2>Create new post</h2>
       <NewPostTemplate>
-        <InputTitle onChange={(e) => setPostState('title', e.target.value)} />
-        <InputBody onChange={(e) => setPostState('body', e.target.value)} />
+        <InputTitle
+          onChange={(e) => {
+            setPostState('title', e.target.value);
+            setPostCreated(false);
+          }}
+        />
+        <InputBody
+          onChange={(e) => {
+            setPostState('body', e.target.value);
+            setPostCreated(false);
+          }}
+        />
         <ButtonWrapper>
           <span
             onClick={() => {
               createNewPost();
-              handleEditPopUp({ active: true, message: 'Post created' });
+              handleEditPopUp({
+                active: true,
+                message: 'Post created',
+                color: '#b8efb8',
+              });
+              setPostCreated(true);
             }}
           >
             <SaveIcon />
           </span>
 
-          <BackIcon />
+          <span onClick={() => checkChangesSaved()}>
+            <BackIcon changesSaved={postCreated} />
+          </span>
         </ButtonWrapper>
       </NewPostTemplate>
     </>

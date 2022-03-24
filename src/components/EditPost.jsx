@@ -49,6 +49,7 @@ const ButtonWrapper = styled.div`
 
 function EditPost({ posts, changeState, handleEditPopUp }) {
   const [post, setPost] = useState(null);
+  const [changesSaved, setChangesSaved] = useState(false);
   const { id } = useParams();
 
   useEffect(() => {
@@ -68,7 +69,7 @@ function EditPost({ posts, changeState, handleEditPopUp }) {
     setPost(newPost);
   }
 
-  function changePost() {
+  function savePostChanges() {
     api
       .putPost(id, {
         title: post.title,
@@ -84,8 +85,23 @@ function EditPost({ posts, changeState, handleEditPopUp }) {
           }
         });
         changeState(newPosts);
-        handleEditPopUp({ active: true, message: 'Changes saved' });
+        handleEditPopUp({
+          active: true,
+          message: 'Changes saved',
+          color: '#b8efb8',
+        });
       });
+  }
+
+  function checkChangesSaved() {
+    if (!changesSaved) {
+      handleEditPopUp({
+        active: true,
+        message: 'Changes not saved',
+        color: '#fa6d6d',
+      });
+      setChangesSaved(true);
+    }
   }
 
   return (
@@ -95,24 +111,32 @@ function EditPost({ posts, changeState, handleEditPopUp }) {
           <h2>Edit Post {id}</h2>
           <NewPostTemplate>
             <InputTitle
-              onChange={(e) => setPostState('title', e.target.value)}
+              onChange={(e) => {
+                setPostState('title', e.target.value);
+                setChangesSaved(false);
+              }}
               defaultValue={post.title}
             />
             <InputBody
-              onChange={(e) => setPostState('body', e.target.value)}
+              onChange={(e) => {
+                setPostState('body', e.target.value);
+                setChangesSaved(false);
+              }}
               defaultValue={post.body}
             />
 
             <ButtonWrapper>
               <span
                 onClick={() => {
-                  changePost();
+                  savePostChanges();
+                  setChangesSaved(true);
                 }}
               >
                 <SaveIcon />
               </span>
-
-              <BackIcon />
+              <span onClick={() => checkChangesSaved()}>
+                <BackIcon changesSaved={changesSaved} />
+              </span>
             </ButtonWrapper>
           </NewPostTemplate>
         </>
