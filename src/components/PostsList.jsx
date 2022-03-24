@@ -34,7 +34,7 @@ function PostsList({ posts, changeState, getResurses }) {
 
   return (
     <>
-      <h1>Posts</h1>
+      <h1>Notes</h1>
       {items.length ? null : 'Loading'}
       <AppPosts>
         {items.length ? items : null}

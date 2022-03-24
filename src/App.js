@@ -47,9 +47,10 @@ function App() {
   }
 
   useEffect(() => {
-    const postsFromLS = JSON.parse(localStorage.getItem('myPosts'));
-
-    postsFromLS ? setPosts(postsFromLS) : getResurses();
+    // функционал сохранения в local storage пока закоментирую
+    // const postsFromLS = JSON.parse(localStorage.getItem('myPosts'));
+    // postsFromLS ? setPosts(postsFromLS) : getResurses();
+    getResurses();
   }, []);
 
   function getResurses() {
