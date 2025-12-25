@@ -1,8 +1,8 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import api from '../axiosAPI/api';
+import React from "react";
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import api from "../axiosAPI/api";
 
 const SinglePostPage = () => {
   const [post, setPost] = useState(null);
@@ -18,10 +18,10 @@ const SinglePostPage = () => {
         <>
           <h2>{post.title}</h2>
           <p>{post.body}</p>
-          <Link to={'/'}>Back</Link>
+          <Link to={"/"}>Back</Link>
         </>
       ) : (
-        'Loading'
+        "Загрузка..."
       )}
     </div>
   );

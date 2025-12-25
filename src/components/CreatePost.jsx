@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import SaveIcon from './SaveIcon';
-import BackIcon from './BackIcon';
-import api from '../axiosAPI/api';
+import React, { useState } from "react";
+import styled from "styled-components";
+import SaveIcon from "./SaveIcon";
+import BackIcon from "./BackIcon";
+import api from "../axiosAPI/api";
 
 const NewPostTemplate = styled.div`
   border: solid 1px;
@@ -12,7 +12,7 @@ const NewPostTemplate = styled.div`
   width: 300px;
 `;
 
-const InputTitle = styled.input.attrs({ placeholder: 'Title' })`
+const InputTitle = styled.input.attrs({ placeholder: "Title" })`
   margin: 0 0 20px 0;
   height: 60px;
   font-size: 24px;
@@ -26,7 +26,7 @@ const InputTitle = styled.input.attrs({ placeholder: 'Title' })`
 `;
 
 const InputBody = styled.textarea.attrs({
-  placeholder: 'Post text',
+  placeholder: "Post text",
 })`
   margin: 0;
   height: 170px;
@@ -49,8 +49,8 @@ const ButtonWrapper = styled.div`
 function CreatePost({ posts, changeState, handleEditPopUp }) {
   const [post, setPost] = useState({
     id: null,
-    title: '',
-    body: '',
+    title: "",
+    body: "",
     like: false,
   });
   const [postCreated, setPostCreated] = useState(false);
@@ -79,8 +79,8 @@ function CreatePost({ posts, changeState, handleEditPopUp }) {
     if (!postCreated) {
       handleEditPopUp({
         active: true,
-        message: 'Post not created',
-        color: '#fa6d6d',
+        message: "Запись не создана",
+        color: "#fa6d6d",
       });
       setPostCreated(true);
     }
@@ -88,17 +88,17 @@ function CreatePost({ posts, changeState, handleEditPopUp }) {
 
   return (
     <>
-      <h2>Create new post</h2>
+      <h2>Создать новую запись</h2>
       <NewPostTemplate>
         <InputTitle
           onChange={(e) => {
-            setPostState('title', e.target.value);
+            setPostState("title", e.target.value);
             setPostCreated(false);
           }}
         />
         <InputBody
           onChange={(e) => {
-            setPostState('body', e.target.value);
+            setPostState("body", e.target.value);
             setPostCreated(false);
           }}
         />
@@ -108,8 +108,8 @@ function CreatePost({ posts, changeState, handleEditPopUp }) {
               createNewPost();
               handleEditPopUp({
                 active: true,
-                message: 'Post created',
-                color: '#b8efb8',
+                message: "Запись создана",
+                color: "#b8efb8",
               });
               setPostCreated(true);
             }}

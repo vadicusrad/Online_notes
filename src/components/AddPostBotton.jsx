@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import React from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const AddNewPost = styled.div`
   border: solid 1px;
@@ -12,7 +12,7 @@ const AddNewPost = styled.div`
   height: 300px;
   width: 300px;
   &:after {
-    content: '';
+    content: "";
     width: 10px;
     height: 250px;
     background: grey;
@@ -21,7 +21,7 @@ const AddNewPost = styled.div`
     position: absolute;
   }
   &:before {
-    content: '';
+    content: "";
     width: 250px;
     height: 10px;
     background: grey;

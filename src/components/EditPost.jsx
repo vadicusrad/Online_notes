@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
-import api from '../axiosAPI/api';
-import SaveIcon from './SaveIcon';
-import BackIcon from './BackIcon';
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import { useParams } from "react-router-dom";
+import api from "../axiosAPI/api";
+import SaveIcon from "./SaveIcon";
+import BackIcon from "./BackIcon";
 
 const NewPostTemplate = styled.div`
   border: solid 1px;
@@ -13,7 +13,7 @@ const NewPostTemplate = styled.div`
   width: 300px;
 `;
 
-const InputTitle = styled.input.attrs({ placeholder: 'Title' })`
+const InputTitle = styled.input.attrs({ placeholder: "Title" })`
   margin: 0 0 20px 0;
   height: 60px;
   font-size: 24px;
@@ -27,7 +27,7 @@ const InputTitle = styled.input.attrs({ placeholder: 'Title' })`
 `;
 
 const InputBody = styled.textarea.attrs({
-  placeholder: 'Post text',
+  placeholder: "Post text",
 })`
   margin: 0;
   height: 170px;
@@ -87,8 +87,8 @@ function EditPost({ posts, changeState, handleEditPopUp }) {
         changeState(newPosts);
         handleEditPopUp({
           active: true,
-          message: 'Changes saved',
-          color: '#b8efb8',
+          message: "Изменения сохранены",
+          color: "#b8efb8",
         });
       });
   }
@@ -97,8 +97,8 @@ function EditPost({ posts, changeState, handleEditPopUp }) {
     if (!changesSaved) {
       handleEditPopUp({
         active: true,
-        message: 'Changes not saved',
-        color: '#fa6d6d',
+        message: "Изменения не сохранены",
+        color: "#fa6d6d",
       });
       setChangesSaved(true);
     }
@@ -108,18 +108,18 @@ function EditPost({ posts, changeState, handleEditPopUp }) {
     <>
       {post ? (
         <>
-          <h2>Edit Post {id}</h2>
+          <h2>Редактировать запись {id}</h2>
           <NewPostTemplate>
             <InputTitle
               onChange={(e) => {
-                setPostState('title', e.target.value);
+                setPostState("title", e.target.value);
                 setChangesSaved(false);
               }}
               defaultValue={post.title}
             />
             <InputBody
               onChange={(e) => {
-                setPostState('body', e.target.value);
+                setPostState("body", e.target.value);
                 setChangesSaved(false);
               }}
               defaultValue={post.body}

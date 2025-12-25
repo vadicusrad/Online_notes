@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import PostTemplate from './PostTemplate';
-import styled from 'styled-components';
-import AddPostButton from './AddPostBotton';
+import PostTemplate from "./PostTemplate";
+import styled from "styled-components";
+import AddPostButton from "./AddPostBotton";
 
 const AppPosts = styled.div`
   display: grid;
@@ -29,13 +29,13 @@ function PostsList({ posts, changeState, getResurses }) {
       );
     });
   } else {
-    return <p>Something went wrong... try again later please</p>;
+    return <p>Что то пошло не так, попробуйте позже</p>;
   }
 
   return (
     <>
-      <h1>Notes</h1>
-      {items.length ? null : 'Loading'}
+      <h1>Записки</h1>
+      {items.length ? null : "Загрузка..."}
       <AppPosts>
         {items.length ? items : null}
         <AddPostButton posts={posts} changeState={changeState} />

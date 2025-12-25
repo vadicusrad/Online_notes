@@ -1,13 +1,13 @@
-import React from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
-import EditPost from './components/EditPost';
-import { Routes, Route } from 'react-router-dom';
-import PostsList from './components/PostsList';
-import SinglePostPage from './components/SinglePostPage';
-import CreatePost from './components/CreatePost';
-import { useState, useEffect } from 'react';
-import PopUpMessage from './components/PopUpMessage';
-import api from './axiosAPI/api';
+import React from "react";
+import styled, { createGlobalStyle } from "styled-components";
+import EditPost from "./components/EditPost";
+import { Routes, Route } from "react-router-dom";
+import PostsList from "./components/PostsList";
+import SinglePostPage from "./components/SinglePostPage";
+import CreatePost from "./components/CreatePost";
+import { useState, useEffect } from "react";
+import PopUpMessage from "./components/PopUpMessage";
+import api from "./axiosAPI/api";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -32,11 +32,11 @@ const AppContainer = styled.div`
 
 function App() {
   const [posts, setPosts] = useState([]);
-  // console.log('my state now - ', posts);
+
   const [popUp, setPopUp] = useState({
     active: false,
-    message: '',
-    color: 'grey',
+    message: "",
+    color: "grey",
   });
 
   function handleEditPopUp(popUpObject) {
@@ -47,9 +47,6 @@ function App() {
   }
 
   useEffect(() => {
-    // функционал сохранения в local storage пока закоментирую
-    // const postsFromLS = JSON.parse(localStorage.getItem('myPosts'));
-    // postsFromLS ? setPosts(postsFromLS) : getResurses();
     getResurses();
   }, []);
 
@@ -61,8 +58,8 @@ function App() {
   }
 
   function changeState(newState) {
-    localStorage.setItem('myPosts', JSON.stringify(newState));
-    const myPostsFromLS = JSON.parse(localStorage.getItem('myPosts'));
+    localStorage.setItem("myPosts", JSON.stringify(newState));
+    const myPostsFromLS = JSON.parse(localStorage.getItem("myPosts"));
     setPosts(myPostsFromLS);
   }
 
@@ -71,7 +68,7 @@ function App() {
       <GlobalStyle />
       <Routes>
         <Route
-          path='/'
+          path="/"
           element={
             <PostsList
               getResurses={getResurses}
@@ -80,9 +77,9 @@ function App() {
             />
           }
         />
-        <Route path='/posts/:id' element={<SinglePostPage />} />
+        <Route path="/posts/:id" element={<SinglePostPage />} />
         <Route
-          path='/posts/:id/edit'
+          path="/posts/:id/edit"
           element={
             <EditPost
               handleEditPopUp={handleEditPopUp}
@@ -92,7 +89,7 @@ function App() {
           }
         />
         <Route
-          path='/posts/new'
+          path="/posts/new"
           element={
             <CreatePost
               handleEditPopUp={handleEditPopUp}
